@@ -1,2 +1,2 @@
-# pythonize
-C++ with a snake face
+# Pythonize C++
+C++ with a snake face.
