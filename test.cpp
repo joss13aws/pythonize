@@ -1,4 +1,4 @@
-#include "pythonize.hpp"
+#include <pythonize>
 
 using namespace pythonize;
 
