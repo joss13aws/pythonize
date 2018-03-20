@@ -1,8 +1,6 @@
 #include <pythonize>
 
-using namespace pythonize;
-
-int main()
+int main() // Testing
 {
 	auto number = input("Enter float: ");
 	auto qwerty = str("Hello World!");
