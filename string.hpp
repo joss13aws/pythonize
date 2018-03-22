@@ -19,6 +19,12 @@ namespace pythonize
 		class split;
 		str join();
 
+		// TODO: Try this for ‘operator int<size>()’:
+		// int16_t i;
+		// std::sscanf(s, "%"SCNd16, &i);
+		// !!! It parses ‘10qwerty’ without an exception!
+		// Another option: read from istringstream
+
 		explicit inline operator int()           { return std::stoi (*this); }
 		explicit inline operator long()          { return std::stol (*this); }
 		explicit inline operator long long()     { return std::stoll(*this); }
