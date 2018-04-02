@@ -10,7 +10,8 @@ namespace pythonize
 	class range
 	{
 		using VT = int;
-		VT start, stop, step;
+		const VT stop, step;
+		VT start;
 
 	public:
 		// TODO: Exception if step == zero?
