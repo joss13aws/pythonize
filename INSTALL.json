@@ -1,0 +1,11 @@
+{
+	"name" : "pythonize",
+	"version" : "0.1",
+	"dependencies" : [ "libstdc++" ],
+	"files" :
+	[
+		[ "pythonize-core", "/usr/local/include" ]
+		[ "pythonize.hpp", "/usr/local/include/pythonize" ]
+	],
+	"_comment" : "more info for package manager?"
+}
