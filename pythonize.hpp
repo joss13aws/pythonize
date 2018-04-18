@@ -1,6 +1,6 @@
-#include "pythonize-core/io.hpp"
-#include "pythonize-core/range.hpp"
-#include "pythonize-core/string.hpp"
+#include "pythonized/io.hpp"
+#include "pythonized/range.hpp"
+#include "pythonized/string.hpp"
 
 #ifndef PYTHONIZE_MANUALLY
 using namespace pythonize;

@@ -1,4 +1,5 @@
-#include <pythonize>
+#include "pythonize.hpp" // To test the current version
+// #include <pythonize>  // Installed version
 
 int main() // Testing
 {
