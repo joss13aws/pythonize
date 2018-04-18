@@ -2,6 +2,8 @@
 #define PYTHONIZE_STR
 
 #include <string>
+#include <cstdint>
+#include <sstream>
 
 namespace pythonize
 {
@@ -16,14 +18,32 @@ namespace pythonize
 		explicit inline str(const T &other)
 			: std::string(std::to_string(other)) {}
 
-		class split;
-		str join();
+		class split; // TODO
+		str join(/* Many args or a list? */); // TODO
 
-		// TODO: Try this for ‘operator int<size>()’:
+		/* Oh wait, shit, will int() return int anyway?
+		template <int8_t size = sizeof(int)>
+		explicit inline operator int() const
+		{
+			// Doesn’t work because of the scope
+			     if constexpr (size ==  8) ; // TODO
+			else if constexpr (size == 16) int16_t value;
+			else if constexpr (size == 32) int32_t value;
+			else if constexpr (size == 64) int64_t value;
+
+			// TODO: Check if this way is fast enough
+			std::istringstream buffer(*this);
+			buffer >> value;
+
+			// TODO: Check for end of string
+
+			return value;
+		}*/
+
+		// Another option:
 		// int16_t i;
 		// std::sscanf(s, "%"SCNd16, &i);
 		// !!! It parses ‘10qwerty’ without an exception!
-		// Another option: read from istringstream
 
 		explicit inline operator int()           { return std::stoi (*this); }
 		explicit inline operator long()          { return std::stol (*this); }

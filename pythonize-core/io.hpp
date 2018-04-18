@@ -12,7 +12,7 @@ namespace pythonize
 
 	}*/
 
-	inline str input(std::string prompt)
+	inline str input(std::string prompt = "")
 	{
 		std::cout << prompt;
 		std::string res;
