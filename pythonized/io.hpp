@@ -1,6 +1,7 @@
 #ifndef PYTHONIZE_IO
 #define PYTHONIZE_IO
 
+#include <ios>
 #include <iostream>
 #include "string.hpp"
 
