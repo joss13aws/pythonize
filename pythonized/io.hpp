@@ -1,18 +1,12 @@
 #ifndef PYTHONIZE_IO
 #define PYTHONIZE_IO
 
-#include <ios>
 #include <iostream>
+#include <type_traits>
 #include "string.hpp"
 
 namespace pythonize
 {
-	/* TODO: Just constexpr?
-	constexpr const char * bool_to_str(bool value)
-	{
-
-	}*/
-
 	inline str input(std::string prompt = "")
 	{
 		std::cout << prompt;
@@ -21,23 +15,22 @@ namespace pythonize
 		return res;
 	}
 
-	template <typename T = char *>
-	inline void print(const T value = "")
+	inline void print()
 	{
-		std::cout << value << '\n';
+		std::cout << '\n';
 	}
-
-	/* Draft:
-	template <>
-	inline void print<bool>(const T value)
-	{
-		std::cout << (value ? "True" : "False") << '\n';
-	}*/
 
 	template <typename T, typename... Args>
 	inline void print(const T value, const Args... args)
 	{
-		std::cout << value << ' ';
+		if constexpr (std::is_same<T, bool>::value)
+			std::cout << (value ? "True" : "False");
+		else
+			std::cout << value;
+
+		if constexpr (sizeof...(Args) > 0)
+			std::cout << ' ';
+
 		print(args...);
 	}
 }
