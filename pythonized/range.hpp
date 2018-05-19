@@ -5,8 +5,6 @@
 
 namespace pythonize
 {
-	// TODO: const_iterator?
-
 	class range
 	{
 		using VT = int;
