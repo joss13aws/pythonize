@@ -82,6 +82,20 @@ namespace pythonize
 	template <int size = size::def>
 	using UInt = Int<size, unsigned>;
 
+	// TODO: Fixed-width integer types?
+
+	// #define short  Int<16>
+	// #define int    Int<32>
+	// #define long   Int<64>
+	// #define uint   UInt<32>
+
+	// using byte   = Int<8>;
+	// using ubyte  = UInt<8>;
+	// using ushort = UInt<16>;
+	// using ulong  = UInt<64>;
+
+	// Problem: int main() when sizeof(int) != 4
+
 	#define int Int<>
 	#define uint UInt<>
 
