@@ -3,8 +3,12 @@
 
 #include <limits>
 #include <cstdint>
+#include <sstream>
+#include <istream>
 #include <iostream>
 #include <type_traits>
+#include <stdexcept>
+#include "string.hpp"
 
 // TODO: If possible in future versions of C++:
 //       ‘int’               = ‘Int’
@@ -59,6 +63,20 @@ namespace pythonize
 		constexpr Int(type arg) : value(arg) {}
 		constexpr operator type&() { return value; }
 		constexpr operator const type&() const { return value; }
+
+		constexpr Int(const str &arg)
+		{
+			std::istringstream buffer(arg);
+			buffer >> value >> std::ws;
+			if (!buffer.eof())
+				throw std::invalid_argument("Int(str)");
+
+			// TODO: Check if this way is fast enough
+			// Alternative option:
+			// int16_t i;
+			// std::sscanf(s, "%"SCNd16, &i);
+			// !!! It parses ‘10qwerty’ without an exception!
+		}
 	};
 
 	// A separate class instead of a templated alias
@@ -67,9 +85,8 @@ namespace pythonize
 	template <int size = size::def>
 	struct UInt : Int<size, unsigned>
 	{
-		using Base = Int<size, unsigned>;
-		constexpr UInt() = default;
-		constexpr UInt(typename Base::type arg) : Base(arg) {}
+		template <typename... Args>
+		constexpr UInt(Args... args) : Int<size, unsigned>(args...) {}
 	};
 
 	#define int Int<>
