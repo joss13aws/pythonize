@@ -21,13 +21,13 @@ namespace pythonize
 {
 	namespace size
 	{
-		constexpr int def = sizeof(int) * 8;
-		constexpr int ptr = sizeof(intptr_t) * 8;
-		constexpr int max = sizeof(intmax_t) * 8;
+		constexpr auto def = sizeof(int) * 8;
+		constexpr auto ptr = sizeof(intptr_t) * 8;
+		constexpr auto max = sizeof(intmax_t) * 8;
 	}
 
-	template <int size = size::def, typename sign = signed>
-	struct Int
+	template <auto size, typename sign>
+	struct IntSelect
 	{
 		template <bool a, typename b, typename c>
 		using conditional = std::conditional<a, b, c>;
@@ -51,6 +51,13 @@ namespace pythonize
 					>::type
 				>::type
 			>::type;
+	};
+
+	template <auto size, typename sign = signed>
+	struct Int
+	{
+		using type = typename IntSelect<size, sign>::type;
+		using default_type = typename IntSelect<size::def, signed>::type;
 
 		static_assert(!std::is_void<type>::value,
 			"\n  Integer must be 8, 16, 32 or 64 bits.");
@@ -67,7 +74,7 @@ namespace pythonize
 		constexpr Int(const str &arg)
 		{
 			std::istringstream buffer(arg);
-			buffer >> value >> std::ws;
+			buffer >> (*this) >> std::ws;
 			if (!buffer.eof())
 				throw std::invalid_argument("Int(str)");
 
@@ -79,28 +86,24 @@ namespace pythonize
 		}
 	};
 
-	template <int size = size::def>
+	template <auto size>
 	using UInt = Int<size, unsigned>;
 
-	// TODO: Fixed-width integer types?
+	// Fixed-width integer types:
 
-	// #define short  Int<16>
-	// #define int    Int<32>
-	// #define long   Int<64>
-	// #define uint   UInt<32>
+	using byte   = Int<8>;
+	using ubyte  = UInt<8>;
 
-	// using byte   = Int<8>;
-	// using ubyte  = UInt<8>;
-	// using ushort = UInt<16>;
-	// using ulong  = UInt<64>;
+	#define short  Int<16>
+	#define int    Int<32>
+	#define long   Int<64>
 
-	// Problem: int main() when sizeof(int) != 4
-
-	#define int Int<>
-	#define uint UInt<>
+	#define ushort UInt<16>
+	#define uint   UInt<32>
+	#define ulong  UInt<64>
 
 	// And, since main() must return an int...
-	#define main() ::type main()
+	#define main() ::default_type main()
 }
 
 // Treat (u)int<8> as a number, not as a char

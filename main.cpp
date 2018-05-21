@@ -7,7 +7,7 @@ int main() // Testing
 	auto qwerty = str("Hello World!");
 	print(float(number), qwerty, 42);
 
-	print(uint("12"));
+	print(ulong("-1"));
 
 	for (auto i : range(10))
 		print(i);
