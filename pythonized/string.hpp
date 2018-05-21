@@ -2,8 +2,6 @@
 #define PYTHONIZE_STR
 
 #include <string>
-#include <cstdint>
-#include <sstream>
 
 namespace pythonize
 {
