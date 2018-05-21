@@ -79,10 +79,19 @@ namespace pythonize
 				throw std::invalid_argument("Int(str)");
 
 			// TODO: Check if this way is fast enough
+
 			// Alternative option:
-			// int16_t i;
-			// std::sscanf(s, "%"SCNd16, &i);
-			// !!! It parses ‘10qwerty’ without an exception!
+			// #include <cstdio>
+			// #include <cinttypes>
+			// auto format =
+			//      SCNd8   SCNu8
+			//      SCNd16  SCNu16
+			//      SCNd32  SCNu32
+			//      SCNd64  SCNu64
+			// char end[1];
+			// std::sscanf(arg.c_str(), "%" format "%s", &value);
+			// if (end[0] != '\0')
+			// 	throw std::invalid_argument("Int(str)");
 		}
 	};
 
