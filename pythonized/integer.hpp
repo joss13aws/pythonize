@@ -6,7 +6,12 @@
 #include <iostream>
 #include <type_traits>
 
-// TODO: Make ‘std::vector<int>’ legal if possible
+// TODO: If possible in future versions of C++:
+//       ‘int’               = ‘Int’
+//       ‘int<64, unsigned>’ = ‘Int<64, unsigned>’
+//       ‘int a’             = ‘Int<> a’
+//       ‘std::vector<int>’  = ‘std::vector<Int<>>’
+//       [The same for uint]
 
 namespace pythonize
 {
@@ -67,11 +72,11 @@ namespace pythonize
 		constexpr UInt(typename Base::type arg) : Base(arg) {}
 	};
 
-	#define int Int
-	#define uint UInt
+	#define int Int<>
+	#define uint UInt<>
 
 	// And, since main() must return an int...
-	#define main() <>::type main()
+	#define main() ::type main()
 }
 
 // Treat (u)int<8> as a number, not as a char
@@ -79,7 +84,7 @@ namespace pythonize
 namespace std
 {
 	template <typename sign>
-	inline istream & operator>>(istream &stream, pythonize::int<8, sign> &arg)
+	inline istream & operator>>(istream &stream, pythonize::Int<8, sign> &arg)
 	{
 		int16_t buff;
 		stream >> buff;
@@ -88,7 +93,7 @@ namespace std
 	}
 
 	template <typename sign>
-	inline ostream & operator<<(ostream &stream, pythonize::int<8, sign> arg)
+	inline ostream & operator<<(ostream &stream, pythonize::Int<8, sign> arg)
 	{
 		stream << int16_t(arg.value);
 		return stream;
