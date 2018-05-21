@@ -19,9 +19,9 @@ namespace pythonize
 		class split; // TODO
 		str join(/* Many args or a list? */); // TODO
 
-		explicit inline operator float()         { return std::stof (*this); }
-		explicit inline operator double()        { return std::stod (*this); }
-		explicit inline operator long double()   { return std::stold(*this); }
+		explicit inline operator       float() { return std::stof (*this); }
+		explicit inline operator      double() { return std::stod (*this); }
+		explicit inline operator long double() { return std::stold(*this); }
 	};
 }
 
