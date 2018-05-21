@@ -79,15 +79,8 @@ namespace pythonize
 		}
 	};
 
-	// A separate class instead of a templated alias
-	// allows using ‘uint’ instead of ‘uint<>’ (since C++17).
-
 	template <int size = size::def>
-	struct UInt : Int<size, unsigned>
-	{
-		template <typename... Args>
-		constexpr UInt(Args... args) : Int<size, unsigned>(args...) {}
-	};
+	using UInt = Int<size, unsigned>;
 
 	#define int Int<>
 	#define uint UInt<>
