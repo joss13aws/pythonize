@@ -19,6 +19,8 @@
 
 namespace pythonize
 {
+	using Double = double;
+
 	namespace size
 	{
 		constexpr auto def = sizeof(int) * 8;
@@ -58,6 +60,8 @@ namespace pythonize
 	{
 		using type = typename IntSelect<size, sign>::type;
 		using default_type = typename IntSelect<size::def, signed>::type;
+		using double_type = typename std::conditional
+			<std::is_same<type, long>::value, long double, void>::type;
 
 		static_assert(!std::is_void<type>::value,
 			"\n  Integer must be 8, 16, 32 or 64 bits.");
@@ -111,6 +115,9 @@ namespace pythonize
 	#define uint   UInt<32>
 	#define ulong  UInt<64>
 
+	// For ‘long double’, since we redefined long
+	#define double ::double_type
+
 	// And, since main() must return an int...
 	#define main() ::default_type main()
 }
@@ -119,6 +126,13 @@ namespace pythonize
 
 namespace std
 {
+	// TODO: Overload more type traits?
+	template <auto size, typename sign>
+	struct is_arithmetic<pythonize::Int<size, sign>>
+	{
+		static constexpr bool value = true;
+	};
+
 	template <typename sign>
 	inline istream & operator>>(istream &stream, pythonize::Int<8, sign> &arg)
 	{
