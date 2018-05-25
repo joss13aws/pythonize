@@ -11,6 +11,8 @@ int main() // Testing
 
 	long double a;
 
+	Int<> b;
+
 	for (auto i : range(10))
 		print(i);
 }

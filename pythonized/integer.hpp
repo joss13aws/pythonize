@@ -55,7 +55,7 @@ namespace pythonize
 			>::type;
 	};
 
-	template <auto size, typename sign = signed>
+	template <auto size = size::def, typename sign = signed>
 	struct Int
 	{
 		using type = typename IntSelect<size, sign>::type;
@@ -99,7 +99,7 @@ namespace pythonize
 		}
 	};
 
-	template <auto size>
+	template <auto size = size::def>
 	using UInt = Int<size, unsigned>;
 
 	// Fixed-width integer types:
