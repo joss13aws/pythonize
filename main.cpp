@@ -9,7 +9,7 @@ int main() // Testing
 
 	print(str(long("144")) == "144");
 
-	long double a;
+	double a;
 
 	Int<> b;
 

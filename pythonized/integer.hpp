@@ -19,8 +19,6 @@
 
 namespace pythonize
 {
-	using Double = double;
-
 	namespace size
 	{
 		constexpr auto def = sizeof(int) * 8;
@@ -60,7 +58,8 @@ namespace pythonize
 	{
 		using type = typename IntSelect<size, sign>::type;
 		using default_type = typename IntSelect<size::def, signed>::type;
-		using double_type = typename std::conditional
+
+		using double_type = typename std::conditional // See below
 			<std::is_same<type, long>::value, long double, void>::type;
 
 		static_assert(!std::is_void<type>::value,
@@ -116,6 +115,7 @@ namespace pythonize
 	#define ulong  UInt<64>
 
 	// For ‘long double’, since we redefined long
+	using double_type = double;
 	#define double ::double_type
 
 	// And, since main() must return an int...
