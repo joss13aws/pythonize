@@ -84,7 +84,7 @@ namespace pythonize
 
 			// TODO: Check if this way is fast enough
 
-			// Alternative option:
+			// Alternative option #1:
 			// #include <cstdio>
 			// #include <cinttypes>
 			// auto format =
@@ -96,6 +96,8 @@ namespace pythonize
 			// std::sscanf(arg.c_str(), "%" format "%s", &value);
 			// if (end[0] != '\0')
 			// 	throw std::invalid_argument("Int(str)");
+
+			// Alternative option #2: std::from_chars
 		}
 	};
 
