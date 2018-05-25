@@ -15,11 +15,6 @@ namespace pythonize
 		return res;
 	}
 
-	inline void print()
-	{
-		std::cout << '\n';
-	}
-
 	template <typename T, typename... Args>
 	inline void print(const T value, const Args... args)
 	{
@@ -29,9 +24,12 @@ namespace pythonize
 			std::cout << value;
 
 		if constexpr (sizeof...(Args) > 0)
+		{
 			std::cout << ' ';
+			print(args...);
+		}
 
-		print(args...);
+		else std::cout << '\n';
 	}
 }
 
