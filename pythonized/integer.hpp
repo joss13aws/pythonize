@@ -59,7 +59,8 @@ namespace pythonize
 		using type = typename IntSelect<size, sign>::type;
 		using default_type = typename IntSelect<size::def, signed>::type;
 
-		using double_type = typename std::conditional // See below
+		// For ‘long double’, since we redefine ‘long’ below
+		using double_type = typename std::conditional
 			<std::is_same<type, long>::value, long double, void>::type;
 
 		static_assert(!std::is_void<type>::value,
@@ -114,7 +115,7 @@ namespace pythonize
 	#define uint   UInt<32>
 	#define ulong  UInt<64>
 
-	// For ‘long double’, since we redefined long
+	// For ‘(long) double’ with redefined ‘long’
 	using double_type = double;
 	#define double ::double_type
 
