@@ -1,7 +1,7 @@
 #ifndef PYTHONIZE_RANGE
 #define PYTHONIZE_RANGE
 
-#include <iterator>
+#include <iterator> // std::input_iterator_tag
 
 namespace pythonize
 {

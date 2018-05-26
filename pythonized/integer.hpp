@@ -1,14 +1,16 @@
 #ifndef PYTHONIZE_INTEGER
 #define PYTHONIZE_INTEGER
 
-#include <limits>
-#include <cstdint>
-#include <sstream>
-#include <istream>
-#include <iostream>
-#include <type_traits>
-#include <stdexcept>
-#include "string.hpp"
+#include <string>      // std::string
+#include <limits>      // std::numeric_limits
+#include <cstdint>     // std::(u)intN_t
+#include <sstream>     // std::istringstream
+#include <istream>     // std::ws
+#include <iostream>    // std::istream, std::ostream
+#include <stdexcept>   // std::invalid_argument
+#include <string_view> // std::string_view
+#include <type_traits> // std::conditional, std::is_same, std::is_void,
+                       // std::is_signed, std::is_arithmetic
 
 // TODO: If possible in future versions of C++:
 //       ‘int’               = ‘Int’
@@ -75,7 +77,7 @@ namespace pythonize
 		constexpr operator type&() { return value; }
 		constexpr operator const type&() const { return value; }
 
-		constexpr Int(const str &arg)
+		constexpr Int(const std::string &arg)
 		{
 			std::istringstream buffer(arg);
 			buffer >> (*this) >> std::ws;
@@ -97,7 +99,10 @@ namespace pythonize
 			// if (end[0] != '\0')
 			// 	throw std::invalid_argument("Int(str)");
 
-			// Alternative option #2: std::from_chars
+			// Alternative option #2:
+			// #include <charconv>
+			// #include <iterator>
+			// std::from_chars(std::begin(arg), std::end(arg), value);
 		}
 	};
 

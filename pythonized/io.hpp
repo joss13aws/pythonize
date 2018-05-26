@@ -1,13 +1,15 @@
 #ifndef PYTHONIZE_IO
 #define PYTHONIZE_IO
 
-#include <iostream>
-#include <type_traits>
-#include "string.hpp"
+#include <string>      // std::string
+#include <iostream>    // std::cin, std::cout
+#include <string_view> // std::string_view
+#include <type_traits> // std::is_same
+#include "string.hpp"  // pythonize::str
 
 namespace pythonize
 {
-	inline str input(std::string prompt = "")
+	inline str input(std::string_view prompt = "")
 	{
 		std::cout << prompt;
 		std::string res;
