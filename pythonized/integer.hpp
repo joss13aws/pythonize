@@ -1,16 +1,17 @@
 #ifndef PYTHONIZE_INTEGER
 #define PYTHONIZE_INTEGER
 
-#include <string>      // std::string
-#include <limits>      // std::numeric_limits
-#include <cstdint>     // std::(u)intN_t
-#include <sstream>     // std::istringstream
-#include <istream>     // std::ws
-#include <iostream>    // std::istream, std::ostream
-#include <stdexcept>   // std::invalid_argument
-#include <string_view> // std::string_view
-#include <type_traits> // std::conditional, std::is_same, std::is_void,
-                       // std::is_signed, std::is_arithmetic
+#include <limits>       // std::numeric_limits
+#include <cstdint>      // std::(u)intN_t
+#include <iostream>     // std::istream, std::ostream
+#include <stdexcept>    // std::invalid_argument, std::out_of_range
+#include <string_view>  // std::string_view
+#include <type_traits>  // std::conditional, std::is_same, std::is_void,
+                        // std::is_signed, std::is_arithmetic
+#include <system_error> // std::errc
+#include <iterator>     // std::begin, std::end
+#include <charconv>     // std::from_chars
+#include <cctype>       // std::isspace
 
 // TODO: If possible in future versions of C++:
 //       ‘int’               = ‘Int’
@@ -56,8 +57,16 @@ namespace pythonize
 	};
 
 	template <auto size = size::def, typename sign = signed>
-	struct Int
+	class Int
 	{
+		template <typename It>
+		static auto skip_ws(It it)
+		{
+			for (; std::isspace(*it); ++it);
+			return it;
+		}
+
+	public:
 		using type = typename IntSelect<size, sign>::type;
 		using default_type = typename IntSelect<size::def, signed>::type;
 
@@ -77,32 +86,18 @@ namespace pythonize
 		constexpr operator type&() { return value; }
 		constexpr operator const type&() const { return value; }
 
-		constexpr Int(const std::string &arg)
+		constexpr Int(std::string_view arg)
 		{
-			std::istringstream buffer(arg);
-			buffer >> (*this) >> std::ws;
-			if (!buffer.eof())
+			auto [ptr, err] = std::from_chars
+				(skip_ws(std::begin(arg)), std::end(arg), value);
+
+			if (err == std::errc::invalid_argument)
+			    throw std::invalid_argument("Int(str)");
+			if (err == std::errc::result_out_of_range)
+			    throw std::out_of_range("Int(str)");
+
+			if (skip_ws(ptr) != std::end(arg))
 				throw std::invalid_argument("Int(str)");
-
-			// TODO: Check if this way is fast enough
-
-			// Alternative option #1:
-			// #include <cstdio>
-			// #include <cinttypes>
-			// auto format =
-			//      SCNd8   SCNu8
-			//      SCNd16  SCNu16
-			//      SCNd32  SCNu32
-			//      SCNd64  SCNu64
-			// char end[1];
-			// std::sscanf(arg.c_str(), "%" format "%s", &value);
-			// if (end[0] != '\0')
-			// 	throw std::invalid_argument("Int(str)");
-
-			// Alternative option #2:
-			// #include <charconv>
-			// #include <iterator>
-			// std::from_chars(std::begin(arg), std::end(arg), value);
 		}
 	};
 

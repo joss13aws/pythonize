@@ -1,7 +1,7 @@
 #ifndef PYTHONIZE_STR
 #define PYTHONIZE_STR
 
-#include <string>      // std::string, std::to_string(), std::sto(f/d/ld)()
+#include <string>      // std::string, std::to_string, std::sto(f/d/ld)
 #include <type_traits> // std::is_arithmetic
 
 namespace pythonize
@@ -9,7 +9,7 @@ namespace pythonize
 	class str : public std::string
 	{
 		template <typename T>
-		constexpr auto stringify(T arg)
+		static constexpr auto stringify(T arg)
 		{
 			if constexpr (std::is_arithmetic<T>::value)
 				return std::to_string(arg);

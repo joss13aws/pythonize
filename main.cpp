@@ -7,7 +7,7 @@ int main() // Testing
 	auto qwerty = str("Hello World!");
 	print(float(number), qwerty, 42);
 
-	print(str(long("144")) == "144");
+	print(int("  123    ") == 123);
 
 	double a;
 
