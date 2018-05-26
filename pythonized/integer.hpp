@@ -20,6 +20,10 @@
 //       ‘std::vector<int>’  = ‘std::vector<Int<>>’
 //       [The same for uint]
 
+// TODO: Conflicts with <memory>
+// error: ‘class pythonize::Int<32>’ is not a valid type
+// for a template non-type parameter: template<int _Nm, typename _Tp,
+
 namespace pythonize
 {
 	namespace size
