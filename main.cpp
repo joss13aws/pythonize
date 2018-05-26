@@ -5,6 +5,7 @@ int main() // Testing
 {
 	auto number = input("Enter float: ");
 	auto qwerty = str("Hello World!");
+	str text;
 	print(float(number), qwerty, 42);
 
 	print(int("  123    ") == 123);

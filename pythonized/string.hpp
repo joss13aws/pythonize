@@ -18,6 +18,8 @@ namespace pythonize
 		}
 
 	public:
+		using std::string::string;
+
 		template <typename T, typename... Args>
 		constexpr str(T first, Args... args)
 			: std::string(stringify(first), args...) {}
