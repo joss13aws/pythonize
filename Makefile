@@ -1,2 +1,2 @@
 all:
-	g++-8 main.cpp -o main -std=c++17 -pedantic -Wfatal-errors -O3
+	g++ main.cpp -o main -std=c++17 -pedantic -Wfatal-errors -O3
