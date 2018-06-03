@@ -87,8 +87,9 @@ namespace pythonize
 		type value;
 		constexpr Int() = default;
 		constexpr Int(type arg) : value(arg) {}
-		constexpr operator type&() { return value; }
-		constexpr operator const type&() const { return value; }
+
+		template <auto any_size, typename any_sign>
+		constexpr Int(Int<any_size, any_sign> other) : value(other.value) {}
 
 		constexpr Int(std::string_view arg)
 		{
@@ -103,6 +104,9 @@ namespace pythonize
 			if (skip_ws(ptr) != std::end(arg))
 				throw std::invalid_argument("Int(str)");
 		}
+
+		constexpr operator type&() { return value; }
+		constexpr operator const type&() const { return value; }
 	};
 
 	template <auto size = size::def>
