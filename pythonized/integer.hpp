@@ -13,17 +13,6 @@
 #include <charconv>     // std::from_chars
 #include <cctype>       // std::isspace
 
-// TODO: If possible in future versions of C++:
-//       ‘int’               = ‘Int’
-//       ‘int<64, unsigned>’ = ‘Int<64, unsigned>’
-//       ‘int a’             = ‘Int<> a’
-//       ‘std::vector<int>’  = ‘std::vector<Int<>>’
-//       [The same for uint]
-
-// TODO: Conflicts with <memory>
-// error: ‘class pythonize::Int<32>’ is not a valid type
-// for a template non-type parameter: template<int _Nm, typename _Tp,
-
 namespace pythonize
 {
 	namespace size
@@ -112,26 +101,8 @@ namespace pythonize
 	template <auto size = size::def>
 	using UInt = Int<size, unsigned>;
 
-	// Fixed-width integer types:
-
-	using byte   = Int<8>;
-	using ubyte  = UInt<8>;
-
-	#define short  Int<16>
-	#define int    Int<32>
-	#define long   Int<64>
-
-	#define ushort UInt<16>
-	#define uint   UInt<32>
-	#define ulong  UInt<64>
-
-	// For ‘(long) double’ with redefined ‘long’
-	using double_type = double;
-	#define double ::double_type
-
-	// And, since main() must return an int...
-	#define main() ::default_type main()
-	// TODO: Breaks if main takes arguments
+	// Instead of int
+	using num = Int<size::def>;
 }
 
 // Treat (u)int<8> as a number, not as a char

@@ -1,3 +1,5 @@
+// #define EXPERIMENTAL
+
 #include "pythonize.hpp" // To test the current version
 // #include <pythonize>  // Installed version
 
@@ -8,7 +10,7 @@ int main() // Testing
 	str text;
 	print(float(number), qwerty, 42);
 
-	print(int("  123    ") == 123);
+	print(num("  123    ") == 123);
 
 	double a;
 
