@@ -131,6 +131,7 @@ namespace pythonize
 
 	// And, since main() must return an int...
 	#define main() ::default_type main()
+	// TODO: Breaks if main takes arguments
 }
 
 // Treat (u)int<8> as a number, not as a char
