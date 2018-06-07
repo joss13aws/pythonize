@@ -17,8 +17,8 @@ namespace pythonize
 		return res;
 	}
 
-	template <typename T, typename... Args>
-	inline void print(const T value, const Args... args)
+	template <typename T = char const *, typename... Args>
+	inline void print(const T value = "", const Args... args)
 	{
 		if constexpr (std::is_same<T, bool>::value)
 			std::cout << (value ? "True" : "False");
