@@ -13,7 +13,7 @@
 #include <charconv>     // std::from_chars
 #include <cctype>       // std::isspace
 
-namespace pythonize
+namespace py
 {
 	namespace size
 	{
@@ -111,13 +111,13 @@ namespace std
 {
 	// TODO: Overload more type traits?
 	template <auto size, typename sign>
-	struct is_arithmetic<pythonize::Int<size, sign>>
+	struct is_arithmetic<py::Int<size, sign>>
 	{
 		static constexpr bool value = true;
 	};
 
 	template <typename sign>
-	inline istream & operator>>(istream &stream, pythonize::Int<8, sign> &arg)
+	inline istream & operator>>(istream &stream, py::Int<8, sign> &arg)
 	{
 		int16_t buff;
 		stream >> buff;
@@ -126,7 +126,7 @@ namespace std
 	}
 
 	template <typename sign>
-	inline ostream & operator<<(ostream &stream, pythonize::Int<8, sign> arg)
+	inline ostream & operator<<(ostream &stream, py::Int<8, sign> arg)
 	{
 		stream << int16_t(arg.value);
 		return stream;

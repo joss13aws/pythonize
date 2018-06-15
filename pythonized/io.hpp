@@ -5,9 +5,9 @@
 #include <iostream>    // std::cin, std::cout
 #include <string_view> // std::string_view
 #include <type_traits> // std::is_same
-#include "string.hpp"  // pythonize::str
+#include "string.hpp"  // py::str
 
-namespace pythonize
+namespace py
 {
 	inline str input(std::string_view prompt = "")
 	{

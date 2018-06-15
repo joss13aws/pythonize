@@ -4,7 +4,7 @@
 #include <string>      // std::string, std::to_string, std::sto(f/d/ld)
 #include <type_traits> // std::is_arithmetic
 
-namespace pythonize
+namespace py
 {
 	class str : public std::string
 	{

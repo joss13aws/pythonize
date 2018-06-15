@@ -9,5 +9,5 @@
 
 // TODO: Add the same to every header?
 #ifndef PYTHONIZE_MANUALLY
-using namespace pythonize;
+using namespace py;
 #endif

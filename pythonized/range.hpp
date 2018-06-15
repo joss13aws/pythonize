@@ -3,7 +3,7 @@
 
 #include <iterator> // std::input_iterator_tag
 
-namespace pythonize
+namespace py
 {
 	class range
 	{

@@ -9,14 +9,7 @@ int main() // Testing
 	auto qwerty = str("Hello World!");
 	str text;
 	print(float(number), qwerty, 42);
-
 	print(num("  123    ") == 123);
-
-	double a;
-
-	Int<> b;
-
-	print();
 
 	for (auto i : range(10))
 		print(i);

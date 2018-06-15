@@ -12,12 +12,12 @@
 
 // TODO: Conflicts with templates that have int parameters
 // Example: <memory>
-// error: ‘class pythonize::Int<32>’ is not a valid type
+// error: ‘class py::Int<32>’ is not a valid type
 // for a template non-type parameter: template<int _Nm, typename _Tp,
 
 // TODO: Conflicts with macros that use int (like htons())
 
-namespace pythonize
+namespace py
 {
 	// Fixed-width integer types:
 
