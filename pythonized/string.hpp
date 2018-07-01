@@ -13,7 +13,6 @@ namespace py
 		{
 			if constexpr (std::is_arithmetic<T>::value)
 				return std::to_string(arg);
-
 			else return arg;
 		}
 
