@@ -2,7 +2,10 @@
 #define PYTHONIZE_IO
 
 #include <string>      // std::string
+#include <cctype>      // std::isspace
+#include <istream>     // std::ws
 #include <iostream>    // std::cin, std::cout
+#include <stdexcept>   // std::invalid_argument
 #include <string_view> // std::string_view
 #include <type_traits> // std::is_same
 #include "string.hpp"  // py::str
@@ -13,7 +16,7 @@ namespace py
 	{
 		std::cout << prompt;
 		std::string res;
-		std::cin >> res;
+		std::getline(std::cin, res);
 		return res;
 	}
 
@@ -32,6 +35,48 @@ namespace py
 		}
 
 		else std::cout << '\n';
+	}
+
+	namespace lazy
+	{
+		bool nws_left(std::istream &in)
+		{
+			for (char c; (c = in.peek()) != '\n' && c != EOF; in.get())
+				if (!std::isspace(c))
+					return true;
+			return false;
+		}
+
+		// TODO: char_iterator
+
+		struct input // TODO
+		{
+			inline input(std::string_view prompt = "")
+			{
+				std::cout << prompt;
+			}
+
+			template <typename T>
+			inline operator T()
+			{
+				T res;
+				std::cin >> res;
+				if (nws_left(std::cin))
+					throw std::invalid_argument("T(lazy::input)");
+				return res;
+			}
+
+			inline operator str()
+			{
+				std::string res;
+				std::getline(std::cin, res);
+				return res;
+			}
+
+			// begin()
+			// end()
+			//
+		};
 	}
 }
 
