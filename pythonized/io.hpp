@@ -3,10 +3,9 @@
 
 #include <string>      // std::string
 #include <cctype>      // std::isspace
+#include <istream>     // std::istream
 #include <cstddef>     // std::ptrdiff_t, std::nullptr_t
-#include <istream>     // std::istream, std::ws
 #include <iostream>    // std::cin, std::cout
-#include <stdexcept>   // std::invalid_argument
 #include <string_view> // std::string_view
 #include <type_traits> // std::is_same
 #include "string.hpp"  // py::str
