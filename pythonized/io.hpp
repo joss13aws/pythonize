@@ -1,6 +1,7 @@
 #ifndef PYTHONIZE_IO
 #define PYTHONIZE_IO
 
+#include <ios>         // std::ios_base
 #include <string>      // std::string
 #include <cctype>      // std::isspace
 #include <istream>     // std::istream
@@ -142,13 +143,30 @@ namespace py
 		class split; // TODO (lazy)
 	};
 
-	struct file
+	inline namespace open_modes
 	{
-		std::ifstream stream;
-		inline file(const std::string &filename) : stream(filename) {}
+		constexpr auto append   = std::ios_base::app;
+		constexpr auto binary   = std::ios_base::binary;
+		constexpr auto read     = std::ios_base::in;
+		constexpr auto write    = std::ios_base::out;
+		constexpr auto truncate = std::ios_base::trunc;
+		constexpr auto at_end   = std::ios_base::ate;
+	}
+
+	class open
+	{
+		std::fstream stream;
+		using openmode = std::ios_base::openmode;
+
+	public:
+		inline open(const std::string &filename, openmode mode = read)
+		{
+			stream.open(filename, mode);
+		}
+
+		inline auto input() { return py::input("", stream); };
 		constexpr auto begin() { return ifstream_iterator(stream); }
 		constexpr auto end() { return nullptr; }
-		inline auto input() { return py::input("", stream); };
 	};
 
 	template <typename T = char const *, typename... Args>

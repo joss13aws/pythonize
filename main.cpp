@@ -14,7 +14,7 @@ int main() // Testing
 	for (auto i : range(10))
 		print(i);
 
-	for (int a : file("file.txt"))
+	for (int a : open("file.txt"))
 		print(a);
 
 	#ifdef TODO_PROPOSALS
