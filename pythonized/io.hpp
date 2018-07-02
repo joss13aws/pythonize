@@ -143,6 +143,32 @@ namespace py
 		class split; // TODO (lazy)
 	};
 
+	class printer
+	{
+		printer &self = *this;
+		std::ostream &out;
+
+	public:
+		constexpr printer(std::ostream &stream) : out(stream) {}
+
+		template <typename T = char const *, typename... Args>
+		constexpr void operator()(const T value = "", const Args... args)
+		{
+			if constexpr (std::is_same<T, bool>::value)
+				out << (value ? "True" : "False");
+			else
+				out << value;
+
+			if constexpr (sizeof...(Args) > 0)
+			{
+				out << ' ';
+				self(args...);
+			}
+
+			else out << '\n';
+		}
+	};
+
 	inline namespace open_modes
 	{
 		constexpr auto append   = std::ios_base::app;
@@ -159,17 +185,21 @@ namespace py
 		using openmode = std::ios_base::openmode;
 
 	public:
+		printer print;
+
 		inline open(const std::string &filename, openmode mode = read)
-		{
-			stream.open(filename, mode);
-		}
+			: print(stream) { stream.open(filename, mode); }
 
 		inline auto input() { return py::input("", stream); };
 		constexpr auto begin() { return ifstream_iterator(stream); }
 		constexpr auto end() { return nullptr; }
+
+		// TODO: Binary writing/reading
 	};
 
-	template <typename T = char const *, typename... Args>
+	printer print(std::cout);
+
+	/*template <typename T = char const *, typename... Args>
 	inline void print(const T value = "", const Args... args)
 	{
 		if constexpr (std::is_same<T, bool>::value)
@@ -184,7 +214,7 @@ namespace py
 		}
 
 		else std::cout << '\n';
-	}
+	}*/
 }
 
 #endif

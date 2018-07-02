@@ -17,6 +17,9 @@ int main() // Testing
 	for (int a : open("file.txt"))
 		print(a);
 
+	auto f = open("hw.txt", write);
+	f.print("Hello World!");
+
 	#ifdef TODO_PROPOSALS
 
 	for (int c : file) // numbers from file
